@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://static.opentok.com/v2/js/opentok.min.js"></script>
+    <title>Vonage Video</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="control-container">
+        <h1>Welcome To Vonage Video</h1>
+
+        <div class="join control">
+          <p>Your Full Name</p>
+          <input type="text" id="name" placeholder="Name" />
+        </div>
+        <div class="join control">
+          <p>Join a Session</p>
+          <input type="text" id="session" placeholder="Session ID" />
+          <button id="join">Join</button>
+        </div>
+        <div class="create control">
+          <p>Or Create a Session</p>
+          <button id="create">Create</button>
+        </div>
+      </div>
+      <div class="preview-container">
+        <div id="preview-wrapper">
+          <div id="preview"></div>
+        </div>
+        <div id="preview-control">
+          <div>
+            <label for="video-source">Video</label>
+            <select class="selector" id="video-source"></select>
+          </div>
+          <div>
+            <label for="audio-source">Audio</label>
+            <select class="selector" id="audio-source"></select>
+          </div>
+        </div>
+        <button id="start-preview">Preview</button>
+      </div>
+    </div>
+    <script src="js/script.js"></script>
+  </body>
+</html>
