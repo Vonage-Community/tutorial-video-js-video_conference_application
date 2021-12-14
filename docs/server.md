@@ -15,12 +15,26 @@ If you don't already have it, [create your Video API account](https://tokbox.com
 
 ```bash
 npm init -y
-npm install opentok express
+npm install opentok express dotenv
 touch index.js
 touch .env
 ```
 
-Populate the `.env` file with your `API_KEY` and `API_SECRET`. 
+Populate the `.env` file with your `API_KEY` and `API_SECRET`. You can look at `.env.example` for an example.
+
+
+We will also install `nodemon` to automatically restart the server when we make changes.
+
+```bash
+npm install -D nodemon
+```
+
+In `package.json` add the following in the `scripts` section:
+
+```json
+    "watch": "nodemon",
+    "start": "node index.js"
+```
 
 In file `index.js` add the following code:
 
@@ -74,8 +88,6 @@ app.listen(port, () => {
   console.log(`App running on port: ${port}`);
 });
 ```
-
-We can then run the server with `node index.js` and the server will start listening on port 3000. As of now we have two endpoints: `api/create` and `api/credentials`. `api/create` will create a session and return the sessionId. `api/credentials` will return the apiKey and token for the sessinId provided.
 
 This is all we need to get started. But we would also want to serve our frontend code from our server. We will put our frontend code in a folder called `public`. We will then serve the frontend code with `express.static`. In the code above we will add the following code in place of `// Frontend serving code goes here`:
 
@@ -132,6 +144,10 @@ app.post('/api/archive/:archiveId/stop', (req, res) => {
 ```
 
 Setting up archiving is not complete with the server. We also need to setup archiving for our project in the Project Dashboard. Setup a suitable storage for archive using the [instructions here](https://tokbox.com/developer/guides/archiving/#storage). In this example I am using a [S3 bucket](https://aws.amazon.com/s3). You can learn more about setting up a [S3 storage for Tokbox in this document](https://tokbox.com/developer/guides/archiving/using-s3.html). 
+
+## Starting the server
+
+We can start the server with nodemon by running `npm run watch`. This will automatically restart the server on port `3000` when we make changes.
 
 ## Next Steps
 

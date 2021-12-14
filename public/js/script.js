@@ -1,56 +1,13 @@
-var sessionIdText = document.getElementById('session');
-var joinButton = document.getElementById('join');
-var createButton = document.getElementById('create');
 var previewContainer = document.getElementById('preview');
 var previewButton = document.getElementById('start-preview');
 var audioSelector = document.getElementById('audio-source');
 var videoSelector = document.getElementById('video-source');
-var nameText = document.getElementById('name');
 let publisher;
 
-async function onCreateClicked() {
-  try {
-    const response = await fetch('/api/create', {method: 'post'})
-    const data = await response.json();
-    const name = nameText.value;
-    if(name !== "") {
-      if(publisher) {
-        setDevicePreference();
-      }
-      window.location.href = `/session/${data.sessionId}?name=${name}`;
-    } else {
-      alert("Name required");
-    }
-  } 
-  catch (e) {
-    console.log(e);
-  }
-}
-
-function setDevicePreference() {
-  const audioSourceId = publisher.getAudioSource().id;
-  const videoSourceId = publisher.getVideoSource().deviceId;
-  const videoEnabled = publisher.getVideoSource().track ? true : false;
-  const audioEnabled = publisher.getAudioSource().enabled;
-
-  localStorage.setItem('audioSourceId', audioSourceId);
-  localStorage.setItem('videoSourceId', videoSourceId);
-  localStorage.setItem('audioEnabled', JSON.stringify(audioEnabled));
-  localStorage.setItem('videoEnabled', JSON.stringify(videoEnabled));
-}
-
-function onJoinClicked() {
-  const sessionId = sessionIdText.value;
-  const name = nameText.value;
-  if(sessionId !== "" && name !== "") {
-    if(publisher) {
-      setDevicePreference();
-    }
-    window.location.href = `/session/${sessionId}?name=${name}`;
-  } else {
-    alert("Name and SessionID required");
-  }
-}
+var sessionIdText = document.getElementById('session');
+var joinButton = document.getElementById('join');
+var createButton = document.getElementById('create');
+var nameText = document.getElementById('name');
 
 function loadAVSources() {
   OT.getDevices((err, devices) => {
@@ -71,9 +28,6 @@ function loadAVSources() {
 }
 
 loadAVSources();
-
-createButton.addEventListener('click', onCreateClicked);
-joinButton.addEventListener('click', onJoinClicked);
 
 previewButton.addEventListener('click', () => {
   publisher = OT.initPublisher(previewContainer, {height: '100%', width: '100%'})
@@ -114,3 +68,49 @@ videoSelector.addEventListener('change', () => {
   }
 })
 
+function setDevicePreference() {
+  const audioSourceId = publisher.getAudioSource().id;
+  const videoSourceId = publisher.getVideoSource().deviceId;
+  const videoEnabled = publisher.getVideoSource().track ? true : false;
+  const audioEnabled = publisher.getAudioSource().enabled;
+
+  localStorage.setItem('audioSourceId', audioSourceId);
+  localStorage.setItem('videoSourceId', videoSourceId);
+  localStorage.setItem('audioEnabled', JSON.stringify(audioEnabled));
+  localStorage.setItem('videoEnabled', JSON.stringify(videoEnabled));
+}
+
+async function onCreateClicked() {
+  try {
+    const response = await fetch('/api/create', {method: 'post'})
+    const data = await response.json();
+    const name = nameText.value;
+    if(name !== "") {
+      if(publisher) {
+        setDevicePreference();
+      }
+      window.location.href = `/session/${data.sessionId}?name=${name}`;
+    } else {
+      alert("Name required");
+    }
+  } 
+  catch (e) {
+    console.log(e);
+  }
+}
+
+function onJoinClicked() {
+  const sessionId = sessionIdText.value;
+  const name = nameText.value;
+  if(sessionId !== "" && name !== "") {
+    if(publisher) {
+      setDevicePreference();
+    }
+    window.location.href = `/session/${sessionId}?name=${name}`;
+  } else {
+    alert("Name and SessionID required");
+  }
+}
+
+createButton.addEventListener('click', onCreateClicked);
+joinButton.addEventListener('click', onJoinClicked);

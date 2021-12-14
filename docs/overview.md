@@ -26,4 +26,38 @@ You can then go to [http://localhost:3000/](http://localhost:3000/) to see the a
 
 ## Building it from Scratch
 
-You might also want to build this app from scratch. To do this, 
+You might also want to build this app from scratch. To do this, you can clone the `scratch` branch of the repository.
+
+```bash
+git clone -b scratch git@github.com:Vonage-Community/tutorial-video-js-video_conference_application.git
+cd tutorial-video-js-video_conference_application
+```
+
+This has a file structure as follows:
+
+```bash
+├── README.md
+└── public
+    ├── call.html
+    ├── css
+    │   ├── call.css
+    │   └── style.css
+    ├── index.html
+    └── js
+        ├── call.js
+        ├── opentok-layout.js
+        └── script.js
+```
+
+We will fill it out in the next few tutorials.
+
+1. Build a backend server for a video conference app
+2. Build a preview page for the app
+3. Start a video call
+4. Add call controls
+5. Add Screen Sharing
+6. Add Text Chat
+7. Add Archiving
+
+
+

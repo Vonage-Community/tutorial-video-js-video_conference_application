@@ -20,35 +20,58 @@ This is what we want to get in the end.
 
 ## HTML
 
-Create a file name `index.html`. In the `head` of the HTML, we will add the opentok library.
+In `index.html` in the `head` element, we will add the opentok library. This makes `OT` available globally to our frontend JS.
 
 ```html
 <script src="https://static.opentok.com/v2/js/opentok.min.js"></script>
 ```
 
+With the script our html head looks like this:
+
 ```html
-<div class="preview-container">
-  <div id="preview-wrapper">
-    <div id="preview"></div>
-  </div>
-  <div id="preview-control">
-    <div>
-      <label for="video-source">Video</label>
-      <select class="selector" id="video-source"></select>
-    </div>
-    <div>
-      <label for="audio-source">Audio</label>
-      <select class="selector" id="audio-source"></select>
-    </div>
-  </div>
-  <button id="start-preview">Preview</button>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://static.opentok.com/v2/js/opentok.min.js"></script>
+    <title>Vonage Video</title>
+  </head>
 ```
 
-We have an empty div with `id` of `preview`. This is the `div` where we will inject the video and audio preview using Opentok Client. We also have two `selector` for selecting the audio and video devices. There is a `button` to start the preview. 
+The body of the html has two main parts. We will only focus on the `preview` part for now.
+
+```html
+<body>
+    <div class="container">
+      <!-- Start / Join Control goes here -->
+      <div class="preview-container">
+        <div id="preview-wrapper">
+          <div id="preview"></div>
+        </div>
+        <div id="preview-control">
+          <div>
+            <label for="video-source">Video</label>
+            <select class="selector" id="video-source"></select>
+          </div>
+          <div>
+            <label for="audio-source">Audio</label>
+            <select class="selector" id="audio-source"></select>
+          </div>
+        </div>
+        <button id="start-preview">Preview</button>
+      </div>
+    </div>
+    <script src="js/script.js"></script>
+  </body>
+```
+
+We have an empty div with `id` of `preview`. This is the `div` where we will inject the video and audio preview using Opentok Client. We also have two `selector` for selecting the audio and video devices. There is a `button` to start the preview. We also add the `script` tag to load out `script.js` file.
 
 ## JS
-We create reference to the `dom` elements for the `selectors`, `preview` and `button`. We also create a global reference to `publisher`. 
+In the `script.js` file in the `js` folder, we create reference to the `dom` elements for the `selectors`, `preview` and `button`. We also create a global reference to `publisher`. 
 
 ```js
 var previewContainer = document.getElementById('preview');
@@ -56,6 +79,8 @@ var previewButton = document.getElementById('start-preview');
 var audioSelector = document.getElementById('audio-source');
 var videoSelector = document.getElementById('video-source');
 let publisher;
+
+// Start/Join component initialization goes here
 ```
 
 Using `OT.getDevices()` we will get a list of all the audio and video devices. From this we will populate the selector for audio and video devices. We will also add an empty option to the selector so that the user can choose to not use any device
@@ -131,7 +156,7 @@ videoSelector.addEventListener('change', () => {
 
 ## CSS
 
-The css for this page is located in [here](https://raw.githubusercontent.com/Vonage-Community/tutorial-video-js-video_conference_application/main/public/css/style.css)
+The css for this page is located in [here](https://raw.githubusercontent.com/Vonage-Community/tutorial-video-js-video_conference_application/main/public/css/style.css). Copy that css in `css/style.css` in the public folder.
 
 > Note: The html file is incomplete here. The full page also has some extra html that is used for getting session id and username, which we will get into in a later tutorial.
 

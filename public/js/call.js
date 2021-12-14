@@ -1,28 +1,38 @@
 const layoutEl = document.getElementById('layout');
+// pathname = /session/sessionid?name=user
+// split(/) -> ["", "session", "sessionId?name=user"]
+// split(/)[2] -> sessionId?name=user
+// split(?) -> ["sessionId", "name=user"] 
 const sessionId = window.location.pathname.split('/')[2].split('?')[0];
+
+// -- CONTROLS --
 const audioButton = document.getElementById('audio');
 const videoButton = document.getElementById('video');
-const shareButton = document.getElementById('share');
 const disconnect = document.getElementById('end');
+const shareButton = document.getElementById('share');
+// const recordButton = document.getElementById('record');
+
+// -- CHAT --
 const chat = document.getElementById('chat');
 const chatInput = document.getElementById('chat-data');
 const chatContainer = document.querySelector('.chat-container');
 const chatList = document.getElementById('chat-list');
 const chatSendButton = document.getElementById('send');
 const messageNotification = document.getElementById('message-notification');
-const recordButton = document.getElementById('record');
-
-let username;
 let chatVisible = false;
+let messageCount = 0;
 
-let archiveId;
-let recording = false;
 let layout;
 let publisher;
-let session;
-let sharing;
 let scPublisher;
-let messageCount = 0;
+let session;
+let username;
+
+let sharing;
+
+
+// let archiveId;
+// let recording = false;
 
 async function getCredentials() {
   const response = await fetch('/api/credentials', {
@@ -203,6 +213,19 @@ videoButton.onclick = () => {
   }
 }
 
+disconnect.onclick = () => {
+  if(publisher) {
+    publisher.destroy();
+  }
+  if(scPublisher) {
+    scPublisher.destroy();
+  }
+
+  setTimeout(() => {
+    window.location.href = `/`;
+  }, 200)
+};
+
 shareButton.onclick = () => {
   var pubEl = document.createElement('div');
 
@@ -249,18 +272,7 @@ shareButton.onclick = () => {
   }
 }
 
-disconnect.onclick = () => {
-  if(publisher) {
-    publisher.destroy();
-  }
-  if(scPublisher) {
-    scPublisher.destroy();
-  }
 
-  setTimeout(() => {
-    window.location.href = `/`;
-  }, 200)
-};
 
 chat.onclick = () => {
   if(chatVisible) {
@@ -303,30 +315,30 @@ chatInput.addEventListener("keyup", function(event) {
   }
 })
 
-recordButton.onclick = async() => {
-  console.log("record clicked");
-  console.log(recording);
-  if(!recording) {
-    const response = await fetch(`/api/archive/start/${sessionId}`, {
-      method: "post",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+// recordButton.onclick = async() => {
+//   console.log("record clicked");
+//   console.log(recording);
+//   if(!recording) {
+//     const response = await fetch(`/api/archive/start/${sessionId}`, {
+//       method: "post",
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//     })
 
-    const json = await response.json();
-    console.log(json);
-  } else if(recording && archiveId) {
-    const response = await fetch(`/api/archive/${archiveId}/stop`, {
-      method: "post",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+//     const json = await response.json();
+//     console.log(json);
+//   } else if(recording && archiveId) {
+//     const response = await fetch(`/api/archive/${archiveId}/stop`, {
+//       method: "post",
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//     })
 
-    const json = await response.json();
-    console.log(json);
-  }
-}
+//     const json = await response.json();
+//     console.log(json);
+//   }
+// }
 
 initializeSession();
