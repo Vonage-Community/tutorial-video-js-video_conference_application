@@ -52,20 +52,16 @@ function onJoinClicked() {
   }
 }
 
-async function loadAVSources() {
-  let audioCount = 0;
-  let videoCount = 0;
+function loadAVSources() {
   OT.getDevices((err, devices) => {
     if (err) {
       alert('Not a supported browser');
     }
     devices.forEach(device => {
       if (device.kind.toLowerCase() === 'audioinput') {
-        audioCount += 1;
         audioSelector.innerHTML += `<option value="${device.deviceId}">${device.label}</option>`;
       }
       if (device.kind.toLowerCase() === 'videoinput') {
-        videoCount += 1;
         videoSelector.innerHTML += `<option value="${device.deviceId}">${device.label}</option>`;
       }
     });
@@ -98,8 +94,6 @@ previewButton.addEventListener('click', () => {
 
 audioSelector.addEventListener('change', e => {
   if(publisher) {
-    console.log(publisher.getVideoSource());
-    console.log(publisher.getAudioSource());
     if(audioSelector.value === "") {
       publisher.publishAudio(false);
     } else {
@@ -111,8 +105,6 @@ audioSelector.addEventListener('change', e => {
 
 videoSelector.addEventListener('change', () => {
   if(publisher) {
-    console.log(publisher.getVideoSource());
-    console.log(publisher.getAudioSource())
     if(videoSelector.value === "") {
       publisher.publishVideo(false);
     } else {
