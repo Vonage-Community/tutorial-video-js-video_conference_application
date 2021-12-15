@@ -8,12 +8,12 @@ const sessionId = window.location.pathname.split('/')[2].split('?')[0];
 // -- CONTROLS --
 const audioButton = document.getElementById('audio');
 const videoButton = document.getElementById('video');
-const disconnect = document.getElementById('end');
 const shareButton = document.getElementById('share');
-// const recordButton = document.getElementById('record');
+const chat = document.getElementById('chat');
+const recordButton = document.getElementById('record');
+const disconnect = document.getElementById('end');
 
 // -- CHAT --
-const chat = document.getElementById('chat');
 const chatInput = document.getElementById('chat-data');
 const chatContainer = document.querySelector('.chat-container');
 const chatList = document.getElementById('chat-list');
@@ -31,8 +31,8 @@ let username;
 let sharing;
 
 
-// let archiveId;
-// let recording = false;
+let archiveId;
+let recording = false;
 
 async function getCredentials() {
   const response = await fetch('/api/credentials', {
@@ -315,30 +315,29 @@ chatInput.addEventListener("keyup", function(event) {
   }
 })
 
-// recordButton.onclick = async() => {
-//   console.log("record clicked");
-//   console.log(recording);
-//   if(!recording) {
-//     const response = await fetch(`/api/archive/start/${sessionId}`, {
-//       method: "post",
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//     })
+recordButton.onclick = async() => {
+  console.log("record clicked");
+  if(!recording) {
+    const response = await fetch(`/api/archive/start/${sessionId}`, {
+      method: "post",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
 
-//     const json = await response.json();
-//     console.log(json);
-//   } else if(recording && archiveId) {
-//     const response = await fetch(`/api/archive/${archiveId}/stop`, {
-//       method: "post",
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//     })
+    const json = await response.json();
+    console.log(json);
+  } else if(recording && archiveId) {
+    const response = await fetch(`/api/archive/${archiveId}/stop`, {
+      method: "post",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
 
-//     const json = await response.json();
-//     console.log(json);
-//   }
-// }
+    const json = await response.json();
+    console.log("record stopped");
+  }
+}
 
 initializeSession();
