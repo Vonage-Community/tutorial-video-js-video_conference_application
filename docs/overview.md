@@ -51,8 +51,8 @@ This has a file structure as follows:
 
 We will fill it out in the next few tutorials.
 
-1. Build a backend server for a video conference app
-2. Build a preview page for the app
+1. Build a backend server
+2. Add a preview page for the app
 3. Start a video call
 4. Add call controls
 5. Add Screen Sharing
