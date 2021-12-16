@@ -17,7 +17,10 @@ If you don't already have it, [create your Video API account](https://tokbox.com
 npm init -y
 npm install opentok express dotenv
 touch index.js
+cp .env.example .env
 ```
+
+Fill `.env` with `API_KEY` and `API_SECRET` from your tokbox project.
 
 We will also install `nodemon` to automatically restart the server when we make changes.
 
