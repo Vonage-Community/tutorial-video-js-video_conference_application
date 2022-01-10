@@ -1,0 +1,16 @@
+{
+  "extends": "airbnb-base",
+  "globals": {
+    "alert": "readonly",
+    "document": "readonly",
+    "fetch": "readonly",
+    "initLayoutContainer": "readonly",
+    "localStorage": "readonly",
+    "OT": "readonly",
+    "window": "readonly"
+  },
+  "rules": {
+      "no-alert": "off",
+      "no-console": "off"
+  }
+}
